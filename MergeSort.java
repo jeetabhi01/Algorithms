@@ -15,6 +15,7 @@ public class MergeSort{
             // System.out.print("" + arr[i] +" ");
             arr[i] = random;
         }
+
         long start = System.nanoTime();
         long startms = System.currentTimeMillis();
         sort(arr,0,arr.length);
@@ -32,7 +33,7 @@ public class MergeSort{
 
     public static void sort(int [] arr , int l , int r){
         if(l < r){
-            int m  = l + (r-l)/2;
+            int m  = (l + r)/2;
             sort(arr,l,m);
             sort(arr,m+1,r);
             merge(arr,l,m,r);
