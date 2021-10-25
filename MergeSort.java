@@ -8,17 +8,18 @@ public class MergeSort{
         
         int[] arr = new int[num];
 
-        System.out.println("Enter the elements in the array");        
+        // System.out.println("Enter the elements in the array");        
         
         for(int i = 0; i <  arr.length; i++){
+            // arr[i]=console.nextInt();
             int random = rgn.nextInt(Integer.MAX_VALUE);
-            // System.out.print("" + arr[i] +" ");
+            System.out.print("" + arr[i] +" ");
             arr[i] = random;
         }
 
         long start = System.nanoTime();
         long startms = System.currentTimeMillis();
-        sort(arr,0,arr.length);
+        sort(arr,0,arr.length-1);
         long stop = System.nanoTime();
         long stopms = System.currentTimeMillis();
         long executionms = stopms - startms;
@@ -31,58 +32,59 @@ public class MergeSort{
         console.close();
     }
 
-    public static void sort(int [] arr , int l , int r){
-        if(l < r){
-            int m  = (l + r)/2;
-            sort(arr,l,m);
-            sort(arr,m+1,r);
-            merge(arr,l,m,r);
-        }
+  public static void sort(int [] arr, int l , int r){
+    if(l>=r){
+        return;
     }
 
-    private static void merge(int [] arr, int l, int m, int r){
-        int n1 =  m - l + 1;
-        int n2 =  r - m;
+    int mid = l + (r-l)/2;
+    sort(arr,l,mid);
+    System.out.println("executed fine");
+    sort(arr,mid+1,r);
+    System.out.println("executed fine");
+    merge(arr,l,mid,r);
 
-        int[] left = new int[n1];
-        int[] right = new int[n2];
+  }
 
-        for(int i =0; i < n1 ; ++i){
-            left[i] = arr[l+i];
+  private static void merge(int[] arr, int l , int m , int r){
+      int leftsize=m-l+1;
+      int rightsize=r-m;
+      int[] leftsubarray = new int[m-l+1];
+      int[] rightsubarray = new int[r-m];
+      System.out.println("left size: " + leftsize + " right size: "+ rightsize);
+      System.out.println("Index bound: " + m);
+      for(int i = 0 ; i<leftsize; i++){
+        leftsubarray[i]=arr[i+l];
+      }
+      System.out.println("Index bound exectured properly");
+      for(int i=0; i<rightsize; i++){
+          rightsubarray[i]=arr[i+m+1];
+      }
+
+      System.out.println("Index bound exectured properly");
+
+
+      int leftsubarrayptr = 0;
+      int rightsubarrayptr= 0;
+      int mergedindex=l;
+      while(leftsubarrayptr< leftsize && rightsubarrayptr<rightsize){
+            arr[mergedindex++]=leftsubarray[leftsubarrayptr]<rightsubarray[rightsubarrayptr]?leftsubarray[leftsubarrayptr++]:rightsubarray[rightsubarrayptr++];
         }
+        System.out.println("While loop executed both pointers");
+     if(leftsubarrayptr>=leftsize){
+         while(rightsubarrayptr<rightsize){
+             arr[mergedindex++]=rightsubarray[rightsubarrayptr++];
+         }
+         System.out.println("While loop right pointer executed");
+     }
+    
+     else{
+         while(leftsubarrayptr<leftsize){
+             arr[mergedindex++]=leftsubarray[leftsubarrayptr++];
+         }
+        System.out.println("While loop left pointer executed");
 
-        for(int j = 0; j < n2 ; ++j){
-                right[j] = arr[m+j+1];
-        }
+     }
+}
 
-        int i = 0 , j = 0;
-
-        int k = l;
-
-        while(i < n1 && j < n2){
-            if(left[i]<= right[j]){
-                arr[k] = left[i];
-                i++;
-            }
-            else{
-                arr[k] = right[j];
-                j++;
-            }
-            k++;
-        }
-
-        while (i < n1) {
-            arr[k] = left[i];
-            i++;
-            k++;
-        }
-
-        while (j < n2) {
-            arr[k] = right[j];
-            j++;
-            k++;
-        }
-  
-        
-    }
 }
