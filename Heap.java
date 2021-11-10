@@ -1,17 +1,6 @@
-import java.util.ArrayList;
-import java.util.Scanner;
-
 public class Heap{
 
-    // private int size = 0;
-    private ArrayList<Integer> arr;
-    Heap(){
-        arr = new ArrayList<Integer>();
-    }
-    Heap(int size){
-        arr = new ArrayList<Integer>(size);
-    }
-
+ 
     private static int leftChildIndex(int index){
         return (index<<1) + 1;
     }
@@ -21,26 +10,8 @@ public class Heap{
         return (index<<1)+ 2;
     }
 
-    private static int parentIndex(int cindex){
-        return (cindex-1) >>> 1;
-    }
-    public static Heap buildHeap(){
-        System.out.println("Enter the number of the elements in the heap");
-        Scanner console = new Scanner(System.in);
-        int size = console.nextInt();
-        Heap heap = new Heap(size);
-        System.out.println("Enter the elements of the heap");
-        for(int i = 0 ; i < size; i++){
-            System.out.print("Input: ");
-            int element = console.nextInt();
-            System.out.println();
-            heap.insert(element);
-        }
-        console.close();
-        return heap;
-
-    }
-    private  void maxHeapify(int [] arr, int i, int size){
+    
+    private  static void maxHeapify(int [] arr, int i, int size){
         int left = leftChildIndex(i);  
         int right = rightChildIndex(i);
         int largest = i;
@@ -59,7 +30,7 @@ public class Heap{
         }
     }
 
-    public  void buildHeap(int [] arr,int size){
+    public  static void buildHeap(int [] arr,int size){
         for(int i = size/2-1 ; i >= 0 ; i-- ){
             maxHeapify(arr, i,size);
         }
@@ -73,7 +44,7 @@ public class Heap{
         return 0;
     } 
 
-    public  void heapSort(int [] arr){
+    public void heapSort(int [] arr){
         buildHeap(arr,arr.length);
         for(int i = arr.length ; i > 1; i--){
             maxHeapify(arr, 0, i);
